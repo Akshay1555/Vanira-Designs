@@ -9,10 +9,41 @@ const INSTAGRAM = 'https://www.instagram.com/vaniradesigns?stkn=d3o3aWg2Zm1hbWJ5
 const FACEBOOK = 'https://www.facebook.com/share/1DNK3bh7fd/';
 
 const products = [
-  { title: 'Signature Sarees', type: 'Sarees', image: '/images/kurta-set.jpg', tag: 'Timeless' },
-  { title: 'Bridal Lehengas', type: 'Lehengas', image: '/images/lehenga.jpg', tag: 'Occasion' },
-  { title: 'Boutique Blouses', type: 'Blouses', image: '/images/lehenga.jpg', tag: 'Designer' },
-  { title: 'Traditional Kudatis', type: 'Kudatis', image: '/images/kurta-set.jpg', tag: 'Classic' }
+  {
+    title: 'Signature Sarees',
+    type: 'Sarees',
+    tag: 'Timeless',
+    images: [
+      '/images/saree-1.jpg',
+      '/images/saree-2.jpg',
+      '/images/saree-3.jpg',
+      '/images/saree-4.jpg',
+      '/images/saree-5.jpg'
+    ]
+  },
+  {
+    title: 'Bridal Lehengas',
+    type: 'Lehengas',
+    tag: 'Occasion',
+    images: [
+      '/images/lehenga-1.jpg',
+      '/images/lehenga-2.jpg',
+      '/images/lehenga-3.jpg',
+      '/images/lehenga-4.jpg',
+      '/images/lehenga-5.jpg'
+    ]
+  },
+  {
+    title: 'Traditional Kudatis',
+    type: 'Kudatis',
+    tag: 'Classic',
+    images: [
+      '/images/kudati-1.jpg',
+      '/images/kudati-2.jpg',
+      '/images/kudati-3.jpg',
+      '/images/kudati-4.jpg'
+    ]
+  }
 ];
 
 function Icon({ name, size = 20 }) {
@@ -35,8 +66,117 @@ function Logo() {
   return <a className="logo" href="#home" aria-label="Vanira Designs home"><span className="logo-mark">V</span><span><strong>Vanira</strong><small>DESIGNS</small></span></a>;
 }
 
+function ProductModal({ item, onClose }) {
+  if (!item) return null;
+
+  const waLink = (i) =>
+    `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+      `Hi Vanira Designs, I am interested in ${item.title} (design ${i + 1}).`
+    )}`;
+
+  return (
+    <div className="product-modal-overlay" onClick={onClose}>
+      <div className="product-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label="Close gallery"><Icon name="close" /></button>
+        <p className="kicker">{item.type}</p>
+        <h3>{item.title}</h3>
+        <p className="modal-hint">Tap any design to enquire on WhatsApp</p>
+        <div className="modal-grid">
+          {item.images.map((src, i) => (
+            <a key={src} href={waLink(i)} target="_blank" rel="noreferrer" className="modal-image">
+              <img src={src} alt={`${item.title} ${i + 1}`} />
+              <span className="modal-image-cta"><Icon name="arrow" size={16} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <style jsx>{`
+        .product-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(20, 14, 8, 0.55);
+          backdrop-filter: blur(3px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          z-index: 200;
+        }
+        .product-modal {
+          position: relative;
+          background: #fffaf3;
+          border-radius: 18px;
+          padding: 28px;
+          max-width: 720px;
+          width: 100%;
+          max-height: 85vh;
+          overflow-y: auto;
+        }
+        .product-modal h3 {
+          margin: 2px 0 4px;
+        }
+        .modal-hint {
+          margin: 0 0 18px;
+          opacity: 0.7;
+          font-size: 0.9rem;
+        }
+        .modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: rgba(0, 0, 0, 0.06);
+          border: none;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+        .modal-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 14px;
+        }
+        .modal-image {
+          position: relative;
+          display: block;
+          border-radius: 12px;
+          overflow: hidden;
+          aspect-ratio: 3 / 4;
+        }
+        .modal-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.35s ease;
+        }
+        .modal-image:hover img {
+          transform: scale(1.06);
+        }
+        .modal-image-cta {
+          position: absolute;
+          right: 8px;
+          bottom: 8px;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #1e1e1e;
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState(null);
 
   const go = (id) => {
     setOpen(false);
@@ -74,27 +214,45 @@ export default function Home() {
           <div className="hero-note"><Icon name="spark" size={18}/> Weddings · Festivals · Celebrations · Everyday elegance</div>
         </div>
         <div className="hero-visual">
-          <div className="hero-card card-back"><img src="/images/lehenga.jpg" alt="Vanira Designs bridal lehenga"/></div>
-          <div className="hero-card card-front"><img src="/images/kurta-set.jpg" alt="Vanira Designs ethnic wear"/></div>
+          <div className="hero-card card-back"><img src="/images/lehenga-1.jpg" alt="Vanira Designs bridal lehenga"/></div>
+          <div className="hero-card card-front"><img src="/images/saree-1.jpg" alt="Vanira Designs ethnic wear"/></div>
           <div className="floating-badge"><span>VD</span><div>Celebrating<br/><strong>Indian beauty</strong></div></div>
         </div>
         <div className="scroll-cue">SCROLL <span/></div>
       </section>
 
-      <section className="marquee" aria-label="Vanira Designs specialties"><div>SAARIS <i>✦</i> LEHENGAS <i>✦</i> BOUTIQUE BLOUSES <i>✦</i> KUDATIS <i>✦</i> TRADITIONAL WEAR <i>✦</i> SAARIS <i>✦</i> LEHENGAS <i>✦</i></div></section>
+      <section className="marquee" aria-label="Vanira Designs specialties"><div>SAARIS <i>✦</i> LEHENGAS <i>✦</i> KUDATIS <i>✦</i> TRADITIONAL WEAR <i>✦</i> SAARIS <i>✦</i> LEHENGAS <i>✦</i></div></section>
 
       <section id="collection" className="section collection">
         <div className="section-head"><div><p className="kicker">THE COLLECTION</p><h2>Pieces with a <em>story.</em></h2></div><p className="section-intro">From graceful sarees to statement lehengas, find silhouettes that celebrate who you are.</p></div>
         <div className="product-grid">
-          {products.map((item, index) => <article className={`product-card p${index + 1}`} key={item.title}>
-            <div className="product-image"><img src={item.image} alt={item.title}/><span className="tag">{item.tag}</span></div>
-            <div className="product-info"><div><small>{item.type}</small><h3>{item.title}</h3></div><a href={`https://wa.me/${WHATSAPP}?text=Hi%20Vanira%20Designs,%20I%20am%20interested%20in%20${encodeURIComponent(item.title)}.`} target="_blank" rel="noreferrer" aria-label={`Enquire about ${item.title}`}><Icon name="arrow" size={18}/></a></div>
-          </article>)}
+          {products.map((item, index) => (
+            <article
+              className={`product-card p${index + 1}`}
+              key={item.title}
+              onClick={() => setActiveItem(item)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveItem(item)}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="product-image">
+                <img src={item.images[0]} alt={item.title} />
+                <span className="tag">{item.tag}</span>
+              </div>
+              <div className="product-info">
+                <div><small>{item.type}</small><h3>{item.title}</h3></div>
+                <span aria-hidden="true"><Icon name="arrow" size={18}/></span>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
+      <ProductModal item={activeItem} onClose={() => setActiveItem(null)} />
+
       <section id="about" className="about section">
-        <div className="about-art"><div className="arch"><img src="/images/lehenga.jpg" alt="Traditional bridal fashion at Vanira Designs"/></div><div className="seal">VANIRA<br/><span>DESIGNS</span><b>✦</b></div></div>
+        <div className="about-art"><div className="arch"><img src="/images/lehenga-3.jpg" alt="Traditional bridal fashion at Vanira Designs"/></div><div className="seal">VANIRA<br/><span>DESIGNS</span><b>✦</b></div></div>
         <div className="about-copy"><p className="kicker">OUR STORY</p><h2>Where tradition meets <em>timeless elegance.</em></h2><p>Welcome to Vanira Designs — where traditional Indian fashion is reimagined with beautiful craftsmanship and a modern sensibility.</p><p>We believe every woman deserves to feel beautiful, confident, and uniquely herself. Our collection is thoughtfully selected for weddings, festivals, celebrations, special occasions, and everyday elegance.</p><div className="values"><div><b>01</b><span>Elegant & unique<br/>designs</span></div><div><b>02</b><span>Quality fabrics &<br/>finishing</span></div><div><b>03</b><span>Personalized fashion<br/>with love & care</span></div></div><a className="text-link" href={`https://wa.me/${WHATSAPP}?text=Hi%20Vanira%20Designs,%20I%20would%20like%20to%20visit%20your%20boutique.`} target="_blank" rel="noreferrer">Start a conversation <Icon name="arrow" size={17}/></a></div>
       </section>
 
