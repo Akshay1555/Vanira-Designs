@@ -18,7 +18,8 @@ const products = [
       '/images/saree-2.jpg',
       '/images/saree-3.jpg',
       '/images/saree-4.jpg',
-      '/images/saree-5.jpg'
+      '/images/saree-5.jpg',
+      '/images/saree-6.jpg'
     ]
   },
   {
@@ -29,18 +30,22 @@ const products = [
       '/images/lehenga-1.jpg',
       '/images/lehenga-2.jpg',
       '/images/lehenga-3.jpg',
-     
+      '/images/lehenga-4.jpg',
+      '/images/lehenga-5.jpg',
+      '/images/lehenga-6.jpg',
     ]
   },
   {
-    title: 'Traditional Kudatis',
-    type: 'Kudatis',
+    title: "Traditional Kurti's",
+    type: "Kurti's",
     tag: 'Classic',
     images: [
       '/images/kudati-1.jpg',
       '/images/kudati-2.jpg',
       '/images/kudati-3.jpg',
-      '/images/kudati-4.jpg'
+      '/images/kudati-4.jpg',
+      '/images/kudati-5.jpg',
+      '/images/kudati-6.jpg',
     ]
   }
 ];
@@ -76,6 +81,31 @@ function Logo() {
   );
 }
 
+function LogoBadge() {
+  return (
+    <span className="logo-badge">
+      <img src="/images/logo.jpg" alt="Vanira Designs" />
+      <style jsx>{`
+        .logo-badge {
+          display: block;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          overflow: hidden;
+          background: #fffaf3;
+        }
+        .logo-badge img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          border-radius: 50%;
+        }
+      `}</style>
+    </span>
+  );
+}
+
 function CardImage({ src, alt, tag }) {
   return (
     <div className="product-image">
@@ -96,6 +126,7 @@ function CardImage({ src, alt, tag }) {
     </div>
   );
 }
+
 function ProductModal({ item, onClose }) {
   if (!item) return null;
 
@@ -246,12 +277,12 @@ export default function Home() {
         <div className="hero-visual">
           <div className="hero-card card-back" style={{ background: '#f2e9dc' }}><img src="/images/lehenga-1.jpg" alt="Vanira Designs bridal lehenga" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div>
           <div className="hero-card card-front" style={{ background: '#f2e9dc' }}><img src="/images/saree-1.jpg" alt="Vanira Designs ethnic wear" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div>
-          <div className="floating-badge"><span>VD</span><div>Celebrating<br/><strong>Indian beauty</strong></div></div>
+          <div className="floating-badge" style={{ padding: 0, background: '#fffaf3', overflow: 'hidden' }}><LogoBadge /></div>
         </div>
         <div className="scroll-cue">SCROLL <span/></div>
       </section>
 
-      <section className="marquee" aria-label="Vanira Designs specialties"><div>SAARIS <i>✦</i> LEHENGAS <i>✦</i> KUDATIS <i>✦</i> TRADITIONAL WEAR <i>✦</i> SAARIS <i>✦</i> LEHENGAS <i>✦</i></div></section>
+      <section className="marquee" aria-label="Vanira Designs specialties"><div>SAARIS <i>✦</i> LEHENGAS <i>✦</i> KURTI&apos;S <i>✦</i> TRADITIONAL WEAR <i>✦</i> SAARIS <i>✦</i> LEHENGAS <i>✦</i></div></section>
 
       <section id="collection" className="section collection">
         <div className="section-head"><div><p className="kicker">THE COLLECTION</p><h2>Pieces with a <em>story.</em></h2></div><p className="section-intro">From graceful sarees to statement lehengas, find silhouettes that celebrate who you are.</p></div>
@@ -279,8 +310,8 @@ export default function Home() {
       <ProductModal item={activeItem} onClose={() => setActiveItem(null)} />
 
       <section id="about" className="about section">
-        <div className="about-art"><div className="arch" style={{ background: '#f2e9dc' }}><img src="/images/lehenga-3.jpg" alt="Traditional bridal fashion at Vanira Designs" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div><div className="seal">VANIRA<br/><span>DESIGNS</span><b>✦</b></div></div>
-        <div className="about-copy"><p className="kicker">OUR STORY</p><h2>Where tradition meets <em>timeless elegance.</em></h2><p>Welcome to Vanira Designs — where traditional Indian fashion is reimagined with beautiful craftsmanship and a modern sensibility.</p><p>We believe every woman deserves to feel beautiful, confident, and uniquely herself. Our collection is thoughtfully selected for weddings, festivals, celebrations, special occasions, and everyday elegance.</p><div className="values"><div><b>01</b><span>Elegant & unique<br/>designs</span></div><div><b>02</b><span>Quality fabrics &<br/>finishing</span></div><div><b>03</b><span>Personalized fashion<br/>with love & care</span></div></div><a className="text-link" href={`https://wa.me/${WHATSAPP}?text=Hi%20Vanira%20Designs,%20I%20would%20like%20to%20visit%20your%20boutique.`} target="_blank" rel="noreferrer">Start a conversation <Icon name="arrow" size={17}/></a></div>
+        <div className="about-art"><div className="arch" style={{ background: '#f2e9dc' }}><img src="/images/lehenga-3.jpg" alt="Traditional bridal fashion at Vanira Designs" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div><div className="seal" style={{ padding: 0, background: '#fffaf3', overflow: 'hidden' }}><LogoBadge /></div></div>
+        <div className="about-copy"><p className="kicker">OUR STORY</p><h2>Where tradition meets <em>timeless elegance.</em></h2><p>Welcome to Vanira Designs — where traditional Indian fashion is reimagined with beautiful craftsmanship and a modern sensibility.</p><p>We believe every woman deserves to feel beautiful, confident, and uniquely herself. Our collection is thoughtfully selected for weddings, festivals, celebrations, special occasions, and everyday elegance.</p><div className="values"><div><b>01</b><span>Elegant &amp; unique<br/>designs</span></div><div><b>02</b><span>Quality fabrics &amp;<br/>finishing</span></div><div><b>03</b><span>Personalized fashion<br/>with love &amp; care</span></div></div><a className="text-link" href={`https://wa.me/${WHATSAPP}?text=Hi%20Vanira%20Designs,%20I%20would%20like%20to%20visit%20your%20boutique.`} target="_blank" rel="noreferrer">Start a conversation <Icon name="arrow" size={17}/></a></div>
       </section>
 
       <section className="occasion"><div className="occasion-inner"><p className="kicker">FOR EVERY OCCASION</p><h2>Dress for the <em>moment.</em></h2><div className="occasion-list"><span>Weddings</span><span>Festivals</span><span>Celebrations</span><span>Special occasions</span><span>Everyday elegance</span></div></div></section>
