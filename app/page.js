@@ -29,8 +29,7 @@ const products = [
       '/images/lehenga-1.jpg',
       '/images/lehenga-2.jpg',
       '/images/lehenga-3.jpg',
-      '/images/lehenga-4.jpg',
-      '/images/lehenga-5.jpg'
+     
     ]
   },
   {
@@ -63,9 +62,40 @@ function Icon({ name, size = 20 }) {
 }
 
 function Logo() {
-  return <a className="logo" href="#home" aria-label="Vanira Designs home"><span className="logo-mark">V</span><span><strong>Vanira</strong><small>DESIGNS</small></span></a>;
+  return (
+    <a className="logo" href="#home" aria-label="Vanira Designs home">
+      <img src="/images/logo.jpg" alt="Vanira Designs" className="logo-img" />
+      <style jsx>{`
+        .logo-img {
+          height: 48px;
+          width: auto;
+          display: block;
+        }
+      `}</style>
+    </a>
+  );
 }
 
+function CardImage({ src, alt, tag }) {
+  return (
+    <div className="product-image">
+      <img src={src} alt={alt} />
+      <span className="tag">{tag}</span>
+      <style jsx>{`
+        .product-image {
+          background: #f2e9dc;
+          overflow: hidden;
+        }
+        .product-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+        }
+      `}</style>
+    </div>
+  );
+}
 function ProductModal({ item, onClose }) {
   if (!item) return null;
 
@@ -144,12 +174,12 @@ function ProductModal({ item, onClose }) {
           display: block;
           border-radius: 12px;
           overflow: hidden;
-          aspect-ratio: 3 / 4;
+          background: #f2e9dc;
         }
         .modal-image img {
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          height: auto;
+          object-fit: contain;
           display: block;
           transition: transform 0.35s ease;
         }
@@ -214,8 +244,8 @@ export default function Home() {
           <div className="hero-note"><Icon name="spark" size={18}/> Weddings · Festivals · Celebrations · Everyday elegance</div>
         </div>
         <div className="hero-visual">
-          <div className="hero-card card-back"><img src="/images/lehenga-1.jpg" alt="Vanira Designs bridal lehenga"/></div>
-          <div className="hero-card card-front"><img src="/images/saree-1.jpg" alt="Vanira Designs ethnic wear"/></div>
+          <div className="hero-card card-back" style={{ background: '#f2e9dc' }}><img src="/images/lehenga-1.jpg" alt="Vanira Designs bridal lehenga" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div>
+          <div className="hero-card card-front" style={{ background: '#f2e9dc' }}><img src="/images/saree-1.jpg" alt="Vanira Designs ethnic wear" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div>
           <div className="floating-badge"><span>VD</span><div>Celebrating<br/><strong>Indian beauty</strong></div></div>
         </div>
         <div className="scroll-cue">SCROLL <span/></div>
@@ -236,10 +266,7 @@ export default function Home() {
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveItem(item)}
               style={{ cursor: 'pointer' }}
             >
-              <div className="product-image">
-                <img src={item.images[0]} alt={item.title} />
-                <span className="tag">{item.tag}</span>
-              </div>
+              <CardImage src={item.images[0]} alt={item.title} tag={item.tag} />
               <div className="product-info">
                 <div><small>{item.type}</small><h3>{item.title}</h3></div>
                 <span aria-hidden="true"><Icon name="arrow" size={18}/></span>
@@ -252,7 +279,7 @@ export default function Home() {
       <ProductModal item={activeItem} onClose={() => setActiveItem(null)} />
 
       <section id="about" className="about section">
-        <div className="about-art"><div className="arch"><img src="/images/lehenga-3.jpg" alt="Traditional bridal fashion at Vanira Designs"/></div><div className="seal">VANIRA<br/><span>DESIGNS</span><b>✦</b></div></div>
+        <div className="about-art"><div className="arch" style={{ background: '#f2e9dc' }}><img src="/images/lehenga-3.jpg" alt="Traditional bridal fashion at Vanira Designs" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/></div><div className="seal">VANIRA<br/><span>DESIGNS</span><b>✦</b></div></div>
         <div className="about-copy"><p className="kicker">OUR STORY</p><h2>Where tradition meets <em>timeless elegance.</em></h2><p>Welcome to Vanira Designs — where traditional Indian fashion is reimagined with beautiful craftsmanship and a modern sensibility.</p><p>We believe every woman deserves to feel beautiful, confident, and uniquely herself. Our collection is thoughtfully selected for weddings, festivals, celebrations, special occasions, and everyday elegance.</p><div className="values"><div><b>01</b><span>Elegant & unique<br/>designs</span></div><div><b>02</b><span>Quality fabrics &<br/>finishing</span></div><div><b>03</b><span>Personalized fashion<br/>with love & care</span></div></div><a className="text-link" href={`https://wa.me/${WHATSAPP}?text=Hi%20Vanira%20Designs,%20I%20would%20like%20to%20visit%20your%20boutique.`} target="_blank" rel="noreferrer">Start a conversation <Icon name="arrow" size={17}/></a></div>
       </section>
 
